@@ -1,4 +1,3 @@
-import React from "react";
 import { ProductCard } from "./ProductCard";
 import { useFilterProduct } from "@/hooks/filterProduct";
 import { useAppSelector } from "@/lib/hook";
