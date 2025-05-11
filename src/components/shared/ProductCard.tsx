@@ -40,8 +40,6 @@ export function ProductCard(data: ProductFakerProps) {
   const [openVariantDialog, setOpenVariantDialog] = React.useState(false);
   const dispatch = useAppDispatch();
 
-  console.log(data);
-
   const {
     register,
     handleSubmit,
@@ -52,17 +50,15 @@ export function ProductCard(data: ProductFakerProps) {
     resolver: zodResolver(variantSchema),
   });
 
-  const onVariantSubmit = (variants: VariantFormValues) => {
+  const onVariantSubmit = (variant: VariantFormValues) => {
     console.log("Variant submitted:", data);
     reset();
     dispatch(
       addVariant({
-        product: {
-          ...data,
-          variants: [
-            ...(data.variants || []),
-            { id: Math.floor(Math.random() * 50) + 1, ...variants },
-          ],
+        productId: data.id,
+        variant: {
+          id: Math.floor(Math.random() * 50) + 1,
+          ...variant,
         },
       })
     );
@@ -70,23 +66,6 @@ export function ProductCard(data: ProductFakerProps) {
     setOpenVariantDialog(false);
   };
 
-  const onVariantEditSubmit = (variants: VariantFormValues) => {
-    console.log("Variant submitted:", data);
-    reset();
-    dispatch(
-      addVariant({
-        product: {
-          ...data,
-          variants: [
-            ...(data.variants || []),
-            { id: Math.floor(Math.random() * 50) + 1, ...variants },
-          ],
-        },
-      })
-    );
-
-    setOpenVariantDialog(false);
-  };
   return (
     <Card className="h-full">
       <CardHeader>

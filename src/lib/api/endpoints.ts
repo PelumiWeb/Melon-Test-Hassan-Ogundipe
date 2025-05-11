@@ -1,4 +1,5 @@
 export const endpoints = {
-    product: "products",
+  getProduct: "products",
+    addProduct: "products/add",
   };
   

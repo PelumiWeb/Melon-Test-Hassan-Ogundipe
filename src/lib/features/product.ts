@@ -25,25 +25,20 @@ export const productSlice = createSlice({
            state.products =  [action.payload.product, ...state?.products ]
         },
         addVariant: (state, action:PayloadAction<Products>) => {
-          const updatedProduct = action.payload.product;
-          state.products = state.products.map((product:Product) =>
-            product.id === updatedProduct.id ? updatedProduct : product
-          );
+          const { variant, productId } = action.payload;
+          const product = state.products.find((p:any) => p.id === productId);
+          if (product) {
+            product.variants.push(variant);
+          }
        },
 
        editVariant: (state, action:PayloadAction<Products>) => {
         const updatedProduct = action.payload.product;
         const updatedVariant = action.payload.variant;
-
-        console.log(updatedVariant, "updatedVariant")
-
         const newVariants = updatedProduct.variants.map((variant:Variant) =>
           variant.id === updatedVariant.id ? { ...variant, ...updatedVariant } : variant
         );
-
         const newProduct = { ...updatedProduct, variants: newVariants };
-
-        console.log(newVariants,newProduct, "The new Data")
 
       
         state.products = state.products.map((product:Product) =>

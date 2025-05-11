@@ -17,7 +17,7 @@ export const useApiQuery = <
   return useQuery<TData, Error, TData, TQueryKey>({
     queryKey: key,
     queryFn: async () => {
-      const response = await axios.get<TData>(`https://fakestoreapi.com/${path}`);
+      const response = await axios.get<TData>(`https://dummyjson.com/${path}`);
       return response.data;
     },
     staleTime: 6000,
@@ -42,7 +42,7 @@ export const useApiMutation = <
   const mutationFn: MutationFunction<T, R> = async (data: any) => {
      
     try {
-       const response = await axios[method]<T>(`https://fakestoreapi.com/${path}`, data);
+       const response = await axios[method]<T>(`https://dummyjson.com/${path}`, data);
           return response.data ; // Ensure type compatibility
     } catch (error) {
        console.log(error, "Error from Mutation");

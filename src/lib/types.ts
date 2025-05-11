@@ -15,5 +15,7 @@ export type Variant = {
   export type Products = {
     products?: any;
     product?: any;
-    variant?:any
+    variant?:any;
+    productId?:number
+
   };
