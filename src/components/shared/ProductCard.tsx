@@ -20,14 +20,13 @@ import { addVariant } from "@/lib/features/product";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { sizes } from "@/lib/costants";
 import { Controller } from "react-hook-form";
+import EditVariantDialog from "./EditVariantDialog";
 
 const variantSchema = z.object({
   size: z.string().min(1, "Size is required"),
@@ -40,7 +39,6 @@ type VariantFormValues = z.infer<typeof variantSchema>;
 export function ProductCard(data: ProductFakerProps) {
   const [openVariantDialog, setOpenVariantDialog] = React.useState(false);
   const dispatch = useAppDispatch();
-  const [editVariantDialog, setEditVariantDialog] = React.useState(false);
 
   console.log(data);
 
@@ -59,7 +57,31 @@ export function ProductCard(data: ProductFakerProps) {
     reset();
     dispatch(
       addVariant({
-        product: { ...data, variants: [...(data.variants || []), variants] },
+        product: {
+          ...data,
+          variants: [
+            ...(data.variants || []),
+            { id: Math.floor(Math.random() * 50) + 1, ...variants },
+          ],
+        },
+      })
+    );
+
+    setOpenVariantDialog(false);
+  };
+
+  const onVariantEditSubmit = (variants: VariantFormValues) => {
+    console.log("Variant submitted:", data);
+    reset();
+    dispatch(
+      addVariant({
+        product: {
+          ...data,
+          variants: [
+            ...(data.variants || []),
+            { id: Math.floor(Math.random() * 50) + 1, ...variants },
+          ],
+        },
       })
     );
 
@@ -78,67 +100,11 @@ export function ProductCard(data: ProductFakerProps) {
         {data?.variants && (
           <div className="mt-2">
             <p className="text-sm text-muted-foreground">Variants:</p>
-            {data?.variants?.map((data: any) => (
+            {data?.variants?.map((variant: any) => (
               <ul className="text-sm space-y-1 mt-2">
                 <li className="flex justify-between items-center">
-                  Size: {data?.size} | {data?.color} | ₦{data?.price}{" "}
-                  <Dialog
-                    open={editVariantDialog}
-                    onOpenChange={setEditVariantDialog}>
-                    <DialogTrigger asChild>
-                      <Button variant="link" className="cursor-pointer">
-                        Edit
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent>
-                      <h2 className="text-lg font-semibold mb-0 mt-4">
-                        Edit Variant
-                      </h2>
-                      <form
-                        className="space-y-4"
-                        onSubmit={handleSubmit(onVariantSubmit)}>
-                        <div>
-                          <Label>Size</Label>
-                          <Input
-                            placeholder={data?.size || "e.g. M"}
-                            {...register("size")}
-                          />
-                          {errors.size && (
-                            <p className="text-sm text-red-500 mt-1">
-                              {errors.size.message}
-                            </p>
-                          )}
-                        </div>
-                        <div>
-                          <Label>Color</Label>
-                          <Input
-                            placeholder={data?.color || "e.g. M"}
-                            {...register("color")}
-                          />
-                          {errors.color && (
-                            <p className="text-sm text-red-500 mt-1">
-                              {errors.color.message}
-                            </p>
-                          )}
-                        </div>
-                        <div>
-                          <Label>Price</Label>
-                          <Input
-                            placeholder={data?.price || "e.g. M"}
-                            {...register("price")}
-                          />
-                          {errors.price && (
-                            <p className="text-sm text-red-500 mt-1">
-                              {errors.price.message}
-                            </p>
-                          )}
-                        </div>
-                        <Button type="submit" className="w-full">
-                          Save Variant
-                        </Button>
-                      </form>
-                    </DialogContent>
-                  </Dialog>
+                  Size: {variant?.size} | {variant?.color} | ₦{variant?.price}{" "}
+                  <EditVariantDialog data={data} variant={variant} />
                 </li>
                 {/* <li className="flex justify-between">
                   Size: L | Blue | ₦6,000 <Button variant="link">Edit</Button>

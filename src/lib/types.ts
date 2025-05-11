@@ -1,4 +1,5 @@
 export type Variant = {
+  id: number;
     size: string;
     color: string;
     price: string;
@@ -14,4 +15,5 @@ export type Variant = {
   export type Products = {
     products?: any;
     product?: any;
+    variant?:any
   };

@@ -21,7 +21,8 @@ export const useFilterProduct = (products:any, search:string, selectedSize:strin
                     return variant.size.toLowerCase() ===  selectedSize?.toLowerCase()
                 }
               );
-            return (nameMatch  || descriptionMatch || variantMatch) && variantFilter;
+            return (nameMatch  || descriptionMatch || variantMatch)
+            //  && variantFilter;
           });
 
           console.log(filteredProducts, "from search")

@@ -55,13 +55,11 @@ function App() {
   const [openVariantDialog, setOpenVariantDialog] = useState(false);
   const [selectedSize, setSelectedSize] = useState("");
 
-  console.log(products, "products", selectedSize);
-
   const { data } = useApiQuery<any>(["products"], endpoints.product);
   const dispatch = useAppDispatch();
 
   const filterProduct: any = useFilterProduct(products, search, selectedSize);
-  console.log(filterProduct, "filter product");
+
 
   // React.useEffect(() => {
   //   if (isSuccess && data) {
@@ -106,8 +104,6 @@ function App() {
   });
 
   const onSubmit = (data: any) => {
-    console.log("Product submitted:", data);
-
     mutate({
       title: data.name,
       description: data.description,
