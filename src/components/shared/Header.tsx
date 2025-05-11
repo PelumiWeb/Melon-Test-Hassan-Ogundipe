@@ -23,10 +23,10 @@ import { addProduct } from "@/lib/features/product";
 
 type Props = {
   openVariantDialog: boolean;
-  setOpenVariantDialog: any;
+  setOpenVariantDialog: (value:boolean) => void;
   search: string;
-  setSearch: any;
-  setSelectedSize: any;
+  setSearch: (value:string) => void;
+  setSelectedSize: (value:string) => void;
 };
 
 const productSchema = z.object({

@@ -22,7 +22,7 @@ export type ProductFakerProps = {
 
 function App() {
   const [search, setSearch] = useState("");
-  const [openVariantDialog, setOpenVariantDialog] = useState(false);
+  const [openVariantDialog, setOpenVariantDialog] = useState<boolean>(false);
   const [selectedSize, setSelectedSize] = useState("");
 
   const { data } = useApiQuery<any>(["products"], endpoints.getProduct);
