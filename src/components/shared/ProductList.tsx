@@ -28,16 +28,20 @@ const ProductList = (props: Props) => {
   );
 
   return (
-    <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    <>
       {filterProduct.length == 0 && (
         <div className="w-full flex items-center justify-center h-[200px]">
-          <p>Empty Product, Click add Product to add a product.</p>
+          <p className="text-center">
+            Empty Product, Click add Product to add a product.
+          </p>
         </div>
       )}
-      {filterProduct.map((data: any) => (
-        <ProductCard {...data} />
-      ))}
-    </div>
+      <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        {filterProduct.map((data: any) => (
+          <ProductCard {...data} />
+        ))}
+      </div>
+    </>
   );
 };
 
